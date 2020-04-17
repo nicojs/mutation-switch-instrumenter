@@ -20,7 +20,7 @@
               "source-map-support/register"
             ],
             "args": [
-              "src/*.ts",
+              "src/**/*.ts",
               "samples/*.*"
             ]
         }

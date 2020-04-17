@@ -150,3 +150,14 @@ export function createMutatedAst<T extends types.Node>(
     return mutatedAst;
   }
 }
+
+export function isTypeAnnotation(path: NodePath): boolean {
+  return (
+    path.isInterfaceDeclaration() ||
+    path.isTypeAnnotation() ||
+    types.isTSInterfaceDeclaration(path.node) ||
+    types.isTSTypeAnnotation(path.node) ||
+    types.isTSTypeAliasDeclaration(path.node) ||
+    types.isTSModuleDeclaration(path.node)
+  );
+}

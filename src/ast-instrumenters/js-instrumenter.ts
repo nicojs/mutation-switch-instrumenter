@@ -2,9 +2,8 @@ import { AstInstrumenter } from '.';
 import traverse from '@babel/traverse';
 import { placeMutant } from '../mutant-placers';
 import { mutate } from '../mutators';
-import { declareGlobal } from '../util/syntax-helpers';
+import { declareGlobal, isTypeAnnotation } from '../util/syntax-helpers';
 import { AstFormat } from '../syntax';
-import { types } from '@babel/core';
 
 export const instrumentJS: AstInstrumenter<AstFormat.JS> = (
   { root, originFile },
@@ -12,12 +11,7 @@ export const instrumentJS: AstInstrumenter<AstFormat.JS> = (
 ) => {
   traverse(root, {
     enter(path) {
-      if (
-        path.isInterfaceDeclaration() ||
-        path.isTypeAnnotation() ||
-        types.isTSInterfaceDeclaration(path.node) ||
-        types.isTSTypeAnnotation(path.node)
-      ) {
+      if (isTypeAnnotation(path)) {
         // Don't mutate type declarations
         path.skip();
       } else {
