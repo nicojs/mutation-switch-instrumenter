@@ -52,6 +52,62 @@ Full help
                       Set to "." to replace the input files (warning!!!)
 ```
 
+## Example
+
+This input:
+
+```js
+function add(a, b) {
+  return a + b;
+}
+
+add(40, 2);
+```
+
+Will be instrumented as:
+
+```js
+var __global_69fa48 = function (g) {
+  g.__mutationCoverage__ = g.__mutationCoverage__ || {
+    static: {}
+  };
+
+  g.__coverMutant__ = g.__coverMutant__ || function () {
+    var c = g.__mutationCoverage__.static;
+
+    if (g.__currentTestId__) {
+      c = g.__mutationCoverage__[g.__currentTestId__];
+    }
+
+    var a = arguments;
+
+    for (var i = 0; i < a.length; i++) {
+      c[a[i]] = (c[a[i]] || 0) + 1;
+    }
+  };
+
+  return g;
+}(new Function("return this")());
+
+function add(a, b) {
+  switch (__global_69fa48.activeMutant) {
+    case 0:
+      {}
+      break;
+
+    default:
+      __global_69fa48.__coverMutant__(0);
+      {
+        return __global_69fa48.activeMutant === 1 ? a - b : (__global_69fa48.__coverMutant__(1), a + b);
+      }
+      break;
+  }
+}
+
+add(40, 2);
+```
+
+
 ## License
 
 Copyright 2020 Nico Jansen
