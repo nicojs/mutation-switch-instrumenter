@@ -5,7 +5,11 @@ import { AstFormat, JSAst } from '../syntax';
 export async function parse(text: string, fileName: string): Promise<JSAst> {
   const ast = await parseAsync(text, {
     filename: fileName,
-    presets: ['@babel/preset-typescript'],
+    parserOpts: {
+      ranges: true,
+      sourceFilename: fileName,
+    },
+    presets: [require.resolve('@babel/preset-typescript')],
   });
   if (types.isProgram(ast)) {
     throw new Error('Expected ${filename} to contain a babel.types.file, but was a program');

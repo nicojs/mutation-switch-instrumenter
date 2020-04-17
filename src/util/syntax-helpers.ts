@@ -94,7 +94,7 @@ function eqLocation(a: types.SourceLocation, b: types.SourceLocation): boolean {
 }
 
 export function eqNode<T extends types.Node>(a: T, b: types.Node): b is T {
-  return a.type === b.type && eqLocation(a.loc!, b.loc!);
+  return a.type === b.type && !!a.loc && !!b.loc && eqLocation(a.loc, b.loc);
 }
 
 export function offsetLocations(
@@ -158,6 +158,11 @@ export function isTypeAnnotation(path: NodePath): boolean {
     types.isTSInterfaceDeclaration(path.node) ||
     types.isTSTypeAnnotation(path.node) ||
     types.isTSTypeAliasDeclaration(path.node) ||
-    types.isTSModuleDeclaration(path.node)
+    types.isTSModuleDeclaration(path.node) ||
+    types.isTSEnumDeclaration(path.node)
   );
+}
+
+export function isImportDeclaration(path: NodePath): boolean {
+  return types.isTSImportEqualsDeclaration(path.node) || path.isImportDeclaration();
 }

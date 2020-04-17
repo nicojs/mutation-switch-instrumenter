@@ -2,7 +2,7 @@ import { AstInstrumenter } from '.';
 import traverse from '@babel/traverse';
 import { placeMutant } from '../mutant-placers';
 import { mutate } from '../mutators';
-import { declareGlobal, isTypeAnnotation } from '../util/syntax-helpers';
+import { declareGlobal, isTypeAnnotation, isImportDeclaration } from '../util/syntax-helpers';
 import { AstFormat } from '../syntax';
 
 export const instrumentJS: AstInstrumenter<AstFormat.JS> = (
@@ -11,8 +11,8 @@ export const instrumentJS: AstInstrumenter<AstFormat.JS> = (
 ) => {
   traverse(root, {
     enter(path) {
-      if (isTypeAnnotation(path)) {
-        // Don't mutate type declarations
+      if (isTypeAnnotation(path) || isImportDeclaration(path)) {
+        // Don't mutate type declarations or import statements
         path.skip();
       } else {
         mutate(path).forEach((mutant) => {
