@@ -1,0 +1,48 @@
+{
+  "name": "mutation-switch-instrumenter",
+  "version": "0.0.0",
+  "description": "An example implementation for [mutation switching](https://stryker-mutator.io/blog/2018-10-6/mutation-switching) in JavaScript and TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ext .ts ."
+  },
+  "bin": {
+    "mutation-switch-instrumenter": "./bin/mutation-switch-instrumenter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicojs/mutation-switch-instrumenter.git"
+  },
+  "keywords": ["mutation testing", "poc"],
+  "author": "Nico Jansen <jansennico@gmail.com> (https://stryker-mutator.io)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/babel__core": "^7.1.6",
+    "@types/babel__generator": "^7.6.1",
+    "@types/babel__traverse": "^7.0.9",
+    "@types/glob": "^7.1.1",
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^13.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.4",
+    "source-map-support": "^0.5.16",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/generator": "^7.8.7",
+    "@babel/parser": "^7.9.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/traverse": "^7.8.6",
+    "angular-html-parser": "^1.4.0",
+    "chalk": "^4.0.0",
+    "glob": "^7.1.6",
+    "minimist": "^1.2.5"
+  }
+}
