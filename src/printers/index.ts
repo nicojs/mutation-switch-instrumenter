@@ -1,5 +1,6 @@
 import { print as htmlPrint } from './html-printer';
 import { print as jsPrint } from './js-printer';
+import { print as tsPrint } from './ts-printer';
 import { Ast, AstFormat, AstByFormat } from '../syntax';
 
 export function print(file: Ast): string {
@@ -7,11 +8,14 @@ export function print(file: Ast): string {
     printers: {
       html: htmlPrint,
       js: jsPrint,
+      ts: tsPrint,
     },
   };
   switch (file.format) {
     case AstFormat.JS:
       return jsPrint(file, context);
+    case AstFormat.TS:
+      return tsPrint(file, context);
     case AstFormat.Html:
       return htmlPrint(file, context);
   }

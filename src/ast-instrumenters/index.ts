@@ -8,6 +8,7 @@ export function instrument(ast: Ast, mutantCollector: MutantCollector): void {
     instrumenters: {
       html: instrumentHtml,
       js: instrumentJS,
+      ts: instrumentJS,
     },
   };
   switch (ast.format) {

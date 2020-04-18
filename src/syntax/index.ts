@@ -5,11 +5,13 @@ export { html };
 export enum AstFormat {
   Html = 'html',
   JS = 'js',
+  TS = 'ts',
 }
 
 export interface AstByFormat {
   [AstFormat.Html]: HtmlAst;
   [AstFormat.JS]: JSAst;
+  [AstFormat.TS]: TSAst;
 }
 
 export interface BaseAst {
@@ -26,5 +28,9 @@ export interface JSAst extends BaseAst {
   format: AstFormat.JS;
   root: babelTypes.File;
 }
+export interface TSAst extends BaseAst {
+  format: AstFormat.TS;
+  root: babelTypes.File;
+}
 
-export type Ast = HtmlAst | JSAst;
+export type Ast = HtmlAst | JSAst | TSAst;

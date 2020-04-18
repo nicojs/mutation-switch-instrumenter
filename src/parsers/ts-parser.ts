@@ -10,6 +10,7 @@ export async function parse(text: string, fileName: string): Promise<JSAst> {
       sourceFilename: fileName,
     },
     presets: [require.resolve('@babel/preset-typescript')],
+    plugins: [[require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }]],
   });
   if (types.isProgram(ast)) {
     throw new Error('Expected ${filename} to contain a babel.types.file, but was a program');
