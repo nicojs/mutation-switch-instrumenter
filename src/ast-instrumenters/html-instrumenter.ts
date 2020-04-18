@@ -8,8 +8,8 @@ export const instrumentHtml: AstInstrumenter<AstFormat.Html> = (
 ) => {
   root.visit({
     visitElement(el) {
-      if (el.jsAst) {
-        context.instrumenters.js(el.jsAst, mutantCollector, context);
+      if (el.ast) {
+        context.instrument(el.ast, mutantCollector, context);
       }
     },
   });

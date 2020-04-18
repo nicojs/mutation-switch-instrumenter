@@ -1,4 +1,4 @@
-import { JSAst } from '.';
+import { JSAst, TSAst } from '.';
 import { types as babelTypes } from '@babel/core';
 
 export interface Visitor {
@@ -19,7 +19,7 @@ export interface OtherNode extends BaseNode {
 export interface Element extends BaseNode {
   type: 'element';
   fullName: string;
-  jsAst?: JSAst;
+  ast?: JSAst | TSAst;
 }
 
 export interface RootNode {

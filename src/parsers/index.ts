@@ -2,20 +2,40 @@ import { parse as jsParse } from './js-parser';
 import { parse as tsParse } from './ts-parser';
 import { parse as htmlParse } from './html-parser';
 import path from 'path';
-import { Ast } from '../syntax';
+import { AstFormat, AstByFormat } from '../syntax';
 
-export function parse(code: string, filename: string): Promise<Ast> {
-  const ext = path.extname(filename).toLowerCase();
-  switch (ext) {
-    case '.js':
-      return jsParse(code, filename);
-    case '.ts':
-      return tsParse(code, filename);
-    case '.vue':
-    case '.html':
-    case '.htm':
-      return htmlParse(code, filename, { parsers: { html: htmlParse, js: jsParse, ts: tsParse } });
-    default:
-      throw new Error(`Unable to parse ${filename}. No parser registered for ${ext}!`);
+export function parse<T extends AstFormat = AstFormat>(
+  code: string,
+  fileName: string,
+  formatOverride?: T
+): Promise<AstByFormat[T]> {
+  const format = getFormat(fileName, formatOverride);
+  switch (format) {
+    case AstFormat.JS:
+      return jsParse(code, fileName) as Promise<AstByFormat[T]>;
+    case AstFormat.TS:
+      return tsParse(code, fileName) as Promise<AstByFormat[T]>;
+    case AstFormat.Html:
+      return htmlParse(code, fileName, { parse }) as Promise<AstByFormat[T]>;
+  }
+}
+
+function getFormat(fileName: string, override: AstFormat | undefined): AstFormat {
+  if (override) {
+    return override;
+  } else {
+    const ext = path.extname(fileName).toLowerCase();
+    switch (ext) {
+      case '.js':
+        return AstFormat.JS;
+      case '.ts':
+        return AstFormat.TS;
+      case '.vue':
+      case '.html':
+      case '.htm':
+        return AstFormat.Html;
+      default:
+        throw new Error(`Unable to parse ${fileName}. No parser registered for ${ext}!`);
+    }
   }
 }

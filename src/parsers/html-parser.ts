@@ -114,12 +114,12 @@ async function ngHtmlParser(
         el.endSourceSpan!.start.offset
       );
       if (['ts', 'text/typescript', 'typescript'].includes(type)) {
-        el.jsAst = await parserContext.parsers.ts(content, fileName, parserContext);
+        el.ast = await parserContext.parse(content, fileName, AstFormat.TS);
       } else if (['js', 'text/javascript', 'javascript'].includes(type)) {
-        el.jsAst = await parserContext.parsers.js(content, fileName, parserContext);
+        el.ast = await parserContext.parse(content, fileName, AstFormat.JS);
       }
       const offset = el.startSourceSpan!.end;
-      offsetLocations(el.jsAst!.root, {
+      offsetLocations(el.ast!.root, {
         position: offset.offset,
         column: offset.col,
         line: offset.line,

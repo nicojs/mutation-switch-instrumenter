@@ -3,21 +3,20 @@ import { instrumentHtml } from './html-instrumenter';
 import { instrumentJS } from './js-instrumenter';
 import { AstFormat, AstByFormat, Ast } from '../syntax';
 
-export function instrument(ast: Ast, mutantCollector: MutantCollector): void {
+export function instrument(ast: Ast, mutantCollector: MutantCollector): Ast {
   const context: InstrumenterContext = {
-    instrumenters: {
-      html: instrumentHtml,
-      js: instrumentJS,
-      ts: instrumentJS,
-    },
+    instrument: instrument,
   };
   switch (ast.format) {
     case AstFormat.Html:
       instrumentHtml(ast, mutantCollector, context);
-      break;
+      return ast;
     case AstFormat.JS:
       instrumentJS(ast, mutantCollector, context);
-      break;
+      return ast;
+    case AstFormat.TS:
+      instrumentJS(ast, mutantCollector, context);
+      return ast;
   }
 }
 
@@ -27,10 +26,6 @@ export type AstInstrumenter<T extends AstFormat> = (
   context: InstrumenterContext
 ) => void;
 
-type InstrumentersByFormat = {
-  [K in AstFormat]: AstInstrumenter<K>;
-};
-
 interface InstrumenterContext {
-  instrumenters: InstrumentersByFormat;
+  instrument: AstInstrumenter<AstFormat>;
 }

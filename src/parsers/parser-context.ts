@@ -1,14 +1,11 @@
-import { JSAst, HtmlAst, Ast } from '../syntax';
-
-export interface Parsers {
-  js: Parser<JSAst>;
-  ts: Parser<JSAst>;
-  html: Parser<HtmlAst>;
-}
+import { Ast, AstFormat, AstByFormat } from '../syntax';
 
 export interface ParserContext {
-  parsers: Parsers;
-  startLine?: number;
+  parse: <T extends AstFormat>(
+    code: string,
+    fileName: string,
+    formatOverride?: T
+  ) => Promise<AstByFormat[T]>;
 }
 
 export type Parser<T extends Ast = Ast> = (

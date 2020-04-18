@@ -5,11 +5,11 @@ export const print: Printer<HtmlAst> = (ast, context) => {
   const scripts: { start: number; end: number; replacement: string }[] = [];
   ast.root.visit({
     visitElement(el) {
-      if (el.jsAst) {
+      if (el.ast) {
         scripts.push({
           start: el.innerStart,
           end: el.innerEnd,
-          replacement: `\n${context.printers.js(el.jsAst, context)}\n`,
+          replacement: `\n${context.print(el.ast, context)}\n`,
         });
       }
     },

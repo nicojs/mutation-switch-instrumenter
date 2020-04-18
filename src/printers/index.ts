@@ -5,11 +5,7 @@ import { Ast, AstFormat, AstByFormat } from '../syntax';
 
 export function print(file: Ast): string {
   const context: PrinterContext = {
-    printers: {
-      html: htmlPrint,
-      js: jsPrint,
-      ts: tsPrint,
-    },
+    print,
   };
   switch (file.format) {
     case AstFormat.JS:
@@ -24,7 +20,7 @@ export function print(file: Ast): string {
 export type Printer<T extends Ast> = (file: T, context: PrinterContext) => string;
 
 export interface PrinterContext {
-  printers: Printers;
+  print: Printer<Ast>;
 }
 
 export type Printers = {

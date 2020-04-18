@@ -1,8 +1,8 @@
 import { types } from '@babel/core';
 import { parseAsync } from '@babel/core';
-import { AstFormat, JSAst } from '../syntax';
+import { AstFormat, TSAst } from '../syntax';
 
-export async function parse(text: string, fileName: string): Promise<JSAst> {
+export async function parse(text: string, fileName: string): Promise<TSAst> {
   const ast = await parseAsync(text, {
     filename: fileName,
     parserOpts: {
@@ -18,7 +18,7 @@ export async function parse(text: string, fileName: string): Promise<JSAst> {
   return {
     originFile: fileName,
     rawContent: text,
-    format: AstFormat.JS,
+    format: AstFormat.TS,
     root: ast!,
   };
 }
