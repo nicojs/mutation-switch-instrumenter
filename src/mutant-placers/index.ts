@@ -15,10 +15,11 @@ export const placeMutant: MutantPlacer = (node, mutants) => {
         }
       } catch (error) {
         throw new Error(
-          `Error while placing mutants on ${node.node.loc?.start.line}:${node.node.loc?.start.column}. ${error.stack}`
+          `Error while placing mutants on ${node.node.loc?.start.line}:${node.node.loc?.start.column} with ${placer.placerName}. ${error.stack}`
         );
       }
     }
   }
   return false;
 };
+placeMutant.placerName = 'placeMutant';

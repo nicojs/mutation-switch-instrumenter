@@ -52,3 +52,5 @@ export const switchCaseMutantPlacer: MutantPlacer = (path, mutants) => {
     return false;
   }
 };
+
+switchCaseMutantPlacer.placerName = 'switchCaseMutantPlacer';

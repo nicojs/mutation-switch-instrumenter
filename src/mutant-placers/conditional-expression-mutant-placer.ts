@@ -8,13 +8,20 @@ import {
 } from '../util/syntax-helpers';
 
 /**
- * Places the mutants with a conditional expressions: `global.activeMutant === 1? mutatedCode : regularCode`;
+ * Places the mutants with a conditional expression: `global.activeMutant === 1? mutatedCode : regularCode`;
  */
 export const conditionalExpressionMutantPlacer: MutantPlacer = (
   path: NodePath,
   mutants: Mutant[]
 ): boolean => {
-  if (path.isExpression() && !path.parentPath.isObjectProperty()) {
+  // if (path.isTemplateLiteral() || path.isTaggedTemplateExpression()) {
+  //   debugger;
+  // }
+  if (
+    path.isExpression() &&
+    !path.parentPath.isObjectProperty() &&
+    !path.parentPath.isTaggedTemplateExpression()
+  ) {
     // First calculated the mutated ast before we start to apply mutants.
     const appliedMutants = mutants.map((mutant) => ({
       mutant,
@@ -42,3 +49,4 @@ export const conditionalExpressionMutantPlacer: MutantPlacer = (
     return false;
   }
 };
+conditionalExpressionMutantPlacer.placerName = 'conditionalExpressionMutantPlacer';

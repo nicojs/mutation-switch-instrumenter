@@ -3,4 +3,5 @@ import { Mutant } from '../mutant';
 
 export interface MutantPlacer {
   (node: NodePath, mutants: Mutant[]): boolean;
+  placerName: string;
 }

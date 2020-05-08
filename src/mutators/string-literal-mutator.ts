@@ -8,9 +8,22 @@ export class StringLiteralMutator implements NodeMutator {
   public mutate(path: NodePath): NodeMutation[] {
     if (path.isTemplateLiteral()) {
       if (path.node.quasis.length === 1 && path.node.quasis[0].value.raw.length === 0) {
-        return [{ original: path.node, replacement: types.stringLiteral('Stryker was here!') }];
+        return [
+          {
+            original: path.node,
+            replacement: types.templateLiteral(
+              [types.templateElement({ raw: 'Stryker was here!' })],
+              []
+            ),
+          },
+        ];
       } else {
-        return [{ original: path.node, replacement: types.stringLiteral('') }];
+        return [
+          {
+            original: path.node,
+            replacement: types.templateLiteral([types.templateElement({ raw: '' })], []),
+          },
+        ];
       }
     } else if (this.isDeclarationOrJSX(path.parent) && path.isStringLiteral()) {
       return [
