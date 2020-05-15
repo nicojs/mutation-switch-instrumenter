@@ -61,7 +61,7 @@ export function memberExpressionChain(
 /**
  * Returns a sequence of mutation coverage counters with an optional last expression.
  *
- * @example (global.__coverMutant__(0), global.__coverMutant__(1), 40 + 2)
+ * @example (global.__coverMutant__(0, 1), 40 + 2)
  * @param mutants The mutant ids for which covering syntax needs to be generated
  * @param targetExpression The original expression
  */
@@ -159,7 +159,8 @@ export function isTypeAnnotation(path: NodePath): boolean {
     types.isTSTypeAnnotation(path.node) ||
     types.isTSTypeAliasDeclaration(path.node) ||
     types.isTSModuleDeclaration(path.node) ||
-    types.isTSEnumDeclaration(path.node)
+    types.isTSEnumDeclaration(path.node) ||
+    types.isTSUnionType(path.node)
   );
 }
 

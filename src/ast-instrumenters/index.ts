@@ -5,15 +5,13 @@ import { AstFormat, AstByFormat, Ast } from '../syntax';
 
 export function instrument(ast: Ast, mutantCollector: MutantCollector): Ast {
   const context: InstrumenterContext = {
-    instrument: instrument,
+    instrument,
   };
   switch (ast.format) {
     case AstFormat.Html:
       instrumentHtml(ast, mutantCollector, context);
       return ast;
     case AstFormat.JS:
-      instrumentJS(ast, mutantCollector, context);
-      return ast;
     case AstFormat.TS:
       instrumentJS(ast, mutantCollector, context);
       return ast;
