@@ -1,6 +1,6 @@
 {
   "name": "mutation-switch-instrumenter",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "An example implementation for [mutation switching](https://stryker-mutator.io/blog/2018-10-6/mutation-switching) in JavaScript and TypeScript.",
   "main": "index.js",
   "scripts": {
