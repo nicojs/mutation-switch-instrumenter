@@ -4,20 +4,20 @@ import traverse from '@babel/traverse';
 import { parse } from '@babel/parser';
 
 export const GLOBAL = '__global_69fa48';
-export const MUTATION_COVERAGE_OBJECT = '__mutationCoverage__';
+export const MUTATION_COVERAGE_OBJECT = '__mutantCoverage__';
 export const COVER_MUTANT_HELPER_METHOD = '__coverMutant__';
-export const ACTIVE_MUTANT = 'activeMutant';
+export const ACTIVE_MUTANT = '__activeMutant__';
 
 /**
  * Returns syntax for the global header
  */
 export function declareGlobal(): types.VariableDeclaration {
-  return parse(`var ${GLOBAL} = (function(g){ 
-    g.${MUTATION_COVERAGE_OBJECT} = g.${MUTATION_COVERAGE_OBJECT} || { static: {} };
+  return parse(`var ${GLOBAL} = (function(g){
+    g.${MUTATION_COVERAGE_OBJECT} = g.${MUTATION_COVERAGE_OBJECT} || { static: {}, perTest: {} };
     g.${COVER_MUTANT_HELPER_METHOD} = g.${COVER_MUTANT_HELPER_METHOD} || function () {
       var c = g.${MUTATION_COVERAGE_OBJECT}.static;
       if (g.__currentTestId__) {
-        c = g.${MUTATION_COVERAGE_OBJECT}[g.__currentTestId__];
+        c = g.${MUTATION_COVERAGE_OBJECT}.perTest[g.__currentTestId__] =  g.${MUTATION_COVERAGE_OBJECT}.perTest[g.__currentTestId__] || {};
       }
       var a = arguments;
       for(var i=0; i < a.length; i++){
